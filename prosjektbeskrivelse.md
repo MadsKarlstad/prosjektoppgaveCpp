@@ -1,5 +1,5 @@
 # Prosjektarbeid i C++ 2015
-* **Tittel**: Friendly-birds!
+* **Tittel**: KnowWhenToFoldEm
 * **Gruppemedlemmer**: s193949, s193377
 
 ## Prosjektbeskrivelse
