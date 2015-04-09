@@ -3,17 +3,17 @@
 * **Gruppemedlemmer**: s193949, s193377
 
 ## Prosjektbeskrivelse
-Linjene for "tittel" og "Gruppemedlemmer" over skal parses av en regex, så behold formatet! Bare fyll ut en valgfri tittel på en linje, og gruppemedlemmene som en kommaseparert liste av studentnumre.
-
-Resten av fila tolkes som prosjektbeskrivelse, så her kan du skrive på eget format.
 
 ## Hovedfunksjonalitet i korte trekk
-Hva skal man kunne gjøre med / i programmet? 
+Dette programmet skal være en poker-klient. I hovedsak skal det være mulig 
+å spille poker med én eller flere AIer. AIene skal ha forskjellige 
+strategier.
 
-## Designmål: 
-Bruke lite minne? Gå raskest mulig? Være mest mulig responsivt? Skalerbart? Utvidbart? Modulært? Sikkert (som i secure)? Valg av designmål vil avgjøre hva som er "hensiktsmessig" bruk av objektorientering, design patterns og andre teknikker.
-
+## Designmål:
+Designmålet med dette programmet er at det skal gå raskt, noe som er viktig
+i et pokerspill.
 
 ## Avgrensning:
-* Hva vi håper å oppnå: En fungerende angry-birds-klone, med 4-5 brett, fysikkmotor og animasjon imellom.
-* Hva vi minimum skal få til: En enkel scene av kasser koblet til fysikkmotor, der man kan stable kassene oppå hverandre med "drag'n drop", og så "kaste" noe på dem så de velter.
+* Håper å oppnå et fungerende pokerspill, med et visuelt pokerbord, med 2-10 spillere.
+* Minimum ønskes det å oppnå, visuelt, et pokerbord med 10 stoler rundt, stolene skal få en label med spillersnavn (genereres automatisk for AIspillere).
+* Hvis det tiden strekker til ønskes det også å implementere en online multiplayer-funksjonen.
