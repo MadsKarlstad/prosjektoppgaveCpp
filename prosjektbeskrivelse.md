@@ -15,5 +15,5 @@ i et pokerspill.
 
 ## Avgrensning:
 * Håper å oppnå et fungerende pokerspill, med et visuelt pokerbord, med 2-10 spillere.
-* Minimum ønskes det å oppnå, visuelt, et pokerbord med 10 stoler rundt, stolene skal få en label med spillersnavn (genereres automatisk for AIspillere).
-* Hvis det tiden strekker til ønskes det også å implementere en online multiplayer-funksjonen.
+* Minimum ønskes det å oppnå, visuelt, et pokerbord med 10 stoler rundt, stolene skal få en label med spillersnavn (genereres automatisk for AI-spillere).
+* Hvis tiden strekker til ønskes det også å implementere en online multiplayer-funksjonen.
