@@ -2,7 +2,7 @@
 #include <iostream>
 
 using namespace std;
-//♠ ♥ ♦ ♣ Klasse for kort
+
 player::player(std::string n,int m){
 	name = n;
 	money = m;
