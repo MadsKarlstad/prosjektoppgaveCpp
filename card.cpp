@@ -23,6 +23,10 @@ int card::get_suit(){
 }
 
 int card::get_rank(){
+
+	return rank;
+}
+int card::get_value(){
 	int sum;
 	if(rank==11 || rank==12 || rank==13){
 		sum = 10;

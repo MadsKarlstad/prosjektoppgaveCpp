@@ -13,7 +13,7 @@ public:
 	~deck();
 	card hit();
 	void shuffle();
-	void toString();
+	std::string toString();
 	int getSize();
 };
 

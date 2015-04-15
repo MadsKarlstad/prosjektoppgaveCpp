@@ -21,15 +21,22 @@ card deck::hit(){
 }
 
 void deck::shuffle(){
-	auto engine = std::default_random_engine{};
-	std::shuffle(std::begin(m_deck),std::end(m_deck),engine);
+	//std::random_shuffle(&m_deck[0], &m_deck[51]);
+	for(int i=0;i<52;i++){
+		int randomcard = rand() % 52;
+		card temp=m_deck[i];
+		m_deck[i] = m_deck[randomcard];
+		m_deck[randomcard] = temp;
+	}
 }
 
-void deck::toString(){
+std::string deck::toString(){
+	std::string print = "";
 	for(int i=0;i<m_deck.size();i++){
 		card c = m_deck[i];
-		c.toString();
+		print+=c.toString();
 	}
+	return print;
 }
 
 int deck::getSize(){

@@ -35,7 +35,7 @@ void hand::addCard(card c){
 int hand::handSum(){
 	int sum=0;
 	for(int i=0;i<m_hand.size();i++){
-		sum += m_hand[i].get_rank();
+		sum += m_hand[i].get_value();
 	}
 	return sum;
 }

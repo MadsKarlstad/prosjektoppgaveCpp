@@ -15,6 +15,7 @@ public:
 	std::string toString();
 	int get_suit();
 	int get_rank();
+	int get_value();
 	~card();
 
 };
