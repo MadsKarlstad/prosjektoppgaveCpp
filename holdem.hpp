@@ -9,10 +9,17 @@
 #include "player.hpp"
 
 class holdem{
-	int pot,players,round;
+	int pot=0,players;
+	int smallBlind = 25;
+	int bigBlind = 50;
+	int highestBet = 0;
 	hand* table;
 	hand* playerhand;
+	hand* philshand;
+	hand* carolshand;
 	player* user;
+	player* phil;
+	player* carol;
 	deck* cards;
 public:
 	holdem(player* _user, deck* _cards);
@@ -25,6 +32,11 @@ public:
 	void crownWinner();
 	int getPot();
 	int getNumberOfPlayers();
+	void takeBets();
+	void switchRoles();
+	int getHighestBet();
+	player* getPhil();
+	player* getCarol();
 	~holdem();
 };
 
