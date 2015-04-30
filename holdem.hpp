@@ -7,6 +7,7 @@
 #include "card.hpp"
 #include "deck.hpp"
 #include "player.hpp"
+#include "AI.hpp"
 
 class holdem{
 	int pot=0,players;
@@ -18,9 +19,14 @@ class holdem{
 	hand* philshand;
 	hand* carolshand;
 	player* user;
-	player* phil;
-	player* carol;
+	AI* phil;
+	AI* carol;
 	deck* cards;
+
+
+	double potOdds;
+	double RR;
+	double HS;
 public:
 	holdem(player* _user, deck* _cards);
 	void start();
@@ -32,11 +38,23 @@ public:
 	void crownWinner();
 	int getPot();
 	int getNumberOfPlayers();
-	void takeBets();
+	void takeBets(player* p, int b);
+	void takeAIBets();
 	void switchRoles();
+	bool allReady();
 	int getHighestBet();
-	player* getPhil();
-	player* getCarol();
+
+	//Bestemmer hva AI skal gjøre ut i fra pot odds, return rate og hand strength
+	void calcPotOdds(AI* ai);
+	void calcHandStrength();
+	void calcReturnRate();
+	int AIaction();
+	
+	void reset();
+	void newRound();
+	AI* getPhil();
+	AI* getCarol();
+	hand* getTable();
 	~holdem();
 };
 
