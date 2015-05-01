@@ -191,6 +191,8 @@ int player::getHigh(){
 	return highcard;
 }
 
+bool player::getFolded(){return folded;}
+
 int player::getHandRank(){
 	return handRank;
 }

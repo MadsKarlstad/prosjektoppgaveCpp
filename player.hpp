@@ -38,6 +38,7 @@ public:
 	bool getSB();
 	bool getDealer();
 	void setFolded(bool b);
+	bool getFolded();
 	int getBet();
 	int handsum();
 	hand* getHand();

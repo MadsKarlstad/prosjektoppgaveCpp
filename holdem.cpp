@@ -272,6 +272,25 @@ void holdem::crownWinner(){
 	int p = phil->calcHandRank(table);
 	int c = carol->calcHandRank(table);
 
+	std::string userhand = user->showHand();
+	std::string philhand = phil->showHand();
+	std::string carolhand = carol->showHand();
+	cout << "\n    Phil, Bank: "<< phil->getBank() <<"      Carol, Bank: " << carol->getBank() << endl;
+	cout << "    Phils hand: "<<philhand << "             Carols hand: " << carolhand << endl;
+	cout << "   _______________________________________" << endl;
+	cout << "  /  "<< phil->getBet() <<"                  "<<carol->getBet()<<"               \\  " << endl;
+	cout << " /                                         \\" << endl;
+	cout << "|                                          |" << endl;
+	cout << "|            "<<table->toString()<<"            |" << "  Pot: $"<< pot << endl;
+	cout << "|                                          |" << endl;
+	cout << "|                                          |" << endl;
+	cout << " \\          "<< user->getBet() <<"                              /" << endl;
+	cout << "  \\_______________________________________/" << endl;
+	cout << "             Your hand:" << userhand << endl;
+	cout << "             "<<user->getName()<<", Bank: " << user->getBank() << endl;
+	phil->calcHandRank(table);
+	carol->calcHandRank(table);
+
 	cout << "Your hand score: " << u << endl;
 	cout << "Phil hand score: " << p << endl;
 	cout << "Carol hand score: " << c << endl;
