@@ -14,12 +14,14 @@ deck::deck(){
 	}
 }
 
+//Tar et kort fra kortstokken og returnerer det
 card deck::hit(){
 	card c(m_deck.back().get_suit(),m_deck.back().get_rank());
 	m_deck.pop_back();
 	return c;
 }
 
+//Stokker kortene
 void deck::shuffle(){
 	//std::random_shuffle(&m_deck[0], &m_deck[51]);
 	for(int i=0;i<52;i++){
@@ -30,6 +32,7 @@ void deck::shuffle(){
 	}
 }
 
+//En toString for kortstokken for å sjekke at alle kortene er på plass
 std::string deck::toString(){
 	std::string print = "";
 	for(int i=0;i<m_deck.size();i++){

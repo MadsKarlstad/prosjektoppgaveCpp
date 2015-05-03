@@ -39,22 +39,26 @@ int main(){
 	cin>>name;
 	
 	hand* h = new hand();
-	player* person = new player(name,1000,h);
 	int philsmoney = 1000;
 	int carolsmoney = 1000;
+	bool phildealer = false;
+	bool caroldealer = false;
+	bool userdealer = true;
+	player* person = new player(name,1000,h,userdealer,false,false);
 
-
-	
 	string play = "y";
 	string action = "c";
 
 	while(play == "y"){
 		deck* deckofcards = createDeck();
-		holdem* game = new holdem(person,deckofcards,philsmoney,carolsmoney);
+		holdem* game = new holdem(person,deckofcards,philsmoney,carolsmoney,userdealer,phildealer,caroldealer);
 		AI* phil = game->getPhil();
 		AI* carol = game->getCarol();
 		vector<bool> activePlayers{true,true,true};
 
+		//********************
+		//* Starter spillet **
+		//********************
 		game->start();
 		if(phil->getBank()<=0){
 			phil->setFolded(true);
@@ -68,7 +72,7 @@ int main(){
 		}
 		if(person->getDealer()==true){
 			if(!person->getFolded()){
-				cout << "Would you like to fold(F), check(C) or raise(R) the bet?" << endl;
+				cout << "Would you like to fold(F), call(C) or raise(R) the bet?" << endl;
 				cin>>action;
 				if(!cin.fail()){
 					if(action=="f" || action=="F"){
@@ -78,7 +82,7 @@ int main(){
 					else if(action=="c" || action=="C"){
 						game->takeBets(person, game->getHighestBet() - person->getBet());
 						person->setReady(true);
-						game->showTable();
+						//game->showTable();
 					}
 					else if(action=="r" || action=="R"){
 						int bet;
@@ -109,6 +113,12 @@ int main(){
 					cout << "Phil folds" << endl;
 				}
 				else{
+					if(p==0){
+						cout << "Phil checks" << endl;
+					}
+					else{
+						cout << "Phil sees the bet and raises $" << p << endl; 
+					}
 					game->takeBets(phil,p);
 				}
 			}
@@ -120,6 +130,12 @@ int main(){
 					cout << "Carol folds" << endl;
 				}
 				else{
+					if(c==0){
+						cout << "Carol checks" << endl;
+					}
+					else{
+						cout << "Carol sees the bet and raises $" << c << endl; 
+					}
 					game->takeBets(carol,c);
 				}
 			}
@@ -133,6 +149,12 @@ int main(){
 					cout << "Phil folds" << endl;
 				}
 				else{
+					if(p==0){
+						cout << "Phil checks" << endl;
+					}
+					else{
+						cout << "Phil sees the bet and raises $" << p << endl; 
+					}
 					game->takeBets(phil,p);
 				}
 			}
@@ -144,11 +166,17 @@ int main(){
 					cout << "Carol folds" << endl;
 				}
 				else{
+					if(c==0){
+						cout << "Carol checks" << endl;
+					}
+					else{
+						cout << "Carol sees the bet and raises $" << c << endl; 
+					}
 					game->takeBets(carol,c);
 				}
 			}
 			if(!person->getFolded()){
-				cout << "Would you like to fold(F), check(C) or raise(R) the bet?" << endl;
+				cout << "Would you like to fold(F), call/check(C) or raise(R) the bet?" << endl;
 				cin>>action;
 				if(!cin.fail()){
 					if(action=="f" || action=="F"){
@@ -158,7 +186,7 @@ int main(){
 					else if(action=="c" || action=="C"){
 						game->takeBets(person, game->getHighestBet() - person->getBet());
 						person->setReady(true);
-						game->showTable();
+						//game->showTable();
 					}
 					else if(action=="r" || action=="R"){
 						int bet;
@@ -191,11 +219,17 @@ int main(){
 					cout << "Carol folds" << endl;
 				}
 				else{
+					if(c==0){
+						cout << "Carol checks" << endl;
+					}
+					else{
+						cout << "Carol sees the bet and raises $" << c << endl; 
+					}
 					game->takeBets(carol,c);
 				}
 			}
 			if(!person->getFolded()){
-				cout << "Would you like to fold(F), check(C) or raise(R) the bet?" << endl;
+				cout << "Would you like to fold(F), call/check(C) or raise(R) the bet?" << endl;
 				cin>>action;
 				if(!cin.fail()){
 					if(action=="f" || action=="F"){
@@ -205,7 +239,7 @@ int main(){
 					else if(action=="c" || action=="C"){
 						game->takeBets(person, game->getHighestBet() - person->getBet());
 						person->setReady(true);
-						game->showTable();
+						//game->showTable();
 					}
 					else if(action=="r" || action=="R"){
 						int bet;
@@ -236,12 +270,20 @@ int main(){
 					cout << "Phil folds" << endl;
 				}
 				else{
+					if(p==0){
+						cout << "Phil checks" << endl;
+					}
+					else{
+						cout << "Phil sees the bet and raises $" << p << endl; 
+					}
 					game->takeBets(phil,p);
 				}
 			}
 
 		}
-		//Starter the flop
+		//*********************
+		//* Starter the flop **
+		//*********************
 		if(game->allReady()){
 			game->theFlop();
 			game->reset();
@@ -249,7 +291,7 @@ int main(){
 		while(!game->allReady()){
 			if(person->getDealer()==true){
 			if(!person->getFolded()){
-				cout << "Would you like to fold(F), check(C) or raise(R) the bet?" << endl;
+				cout << "Would you like to fold(F), call/check(C) or raise(R) the bet?" << endl;
 				cin>>action;
 				if(!cin.fail()){
 					if(action=="f" || action=="F"){
@@ -259,7 +301,7 @@ int main(){
 					else if(action=="c" || action=="C"){
 						game->takeBets(person, game->getHighestBet() - person->getBet());
 						person->setReady(true);
-						game->showTable();
+						//game->showTable();
 					}
 					else if(action=="r" || action=="R"){
 						int bet;
@@ -291,6 +333,12 @@ int main(){
 					cout << "Phil folds" << endl;
 				}
 				else{
+					if(p==0){
+						cout << "Phil checks" << endl;
+					}
+					else{
+						cout << "Phil sees the bet and raises $" << p << endl; 
+					}
 					game->takeBets(phil,p);
 					phil->setReady(true);
 					
@@ -305,6 +353,12 @@ int main(){
 					cout << "Carol folds" << endl;
 				}
 				else{
+					if(c==0){
+						cout << "Carol checks" << endl;
+					}
+					else{
+						cout << "Carol sees the bet and raises $" << c << endl; 
+					}
 					game->takeBets(carol,c);
 					carol->setReady(true);
 					
@@ -321,8 +375,13 @@ int main(){
 					cout << "Phil folds" << endl;
 				}
 				else{
+					if(p==0){
+						cout << "Phil checks" << endl;
+					}
+					else{
+						cout << "Phil sees the bet and raises $" << p << endl; 
+					}
 					game->takeBets(phil,p);
-					
 					phil->setReady(true);
 					
 				}
@@ -336,13 +395,19 @@ int main(){
 					cout << "Carol folds" << endl;
 				}
 				else{
+					if(c==0){
+						cout << "Carol checks" << endl;
+					}
+					else{
+						cout << "Carol sees the bet and raises $" << c << endl; 
+					}
 					game->takeBets(carol,c);
 					carol->setReady(true);
 					
 				}
 			}
 			if(!person->getFolded()){
-				cout << "Would you like to fold(F), check(C) or raise(R) the bet?" << endl;
+				cout << "Would you like to fold(F), call/check(C) or raise(R) the bet?" << endl;
 				cin>>action;
 				if(!cin.fail()){
 					if(action=="f" || action=="F"){
@@ -352,7 +417,7 @@ int main(){
 					else if(action=="c" || action=="C"){
 						game->takeBets(person, game->getHighestBet() - person->getBet());
 						person->setReady(true);
-						game->showTable();
+						//game->showTable();
 					}
 					else if(action=="r" || action=="R"){
 						int bet;
@@ -386,12 +451,18 @@ int main(){
 					cout << "Carol folds" << endl;
 				}
 				else{
+					if(c==0){
+						cout << "Carol checks" << endl;
+					}
+					else{
+						cout << "Carol sees the bet and raises $" << c << endl; 
+					}
 					game->takeBets(carol,c);
 					carol->setReady(true);
 				}
 			}
 			if(!person->getFolded()){
-				cout << "Would you like to fold(F), check(C) or raise(R) the bet?" << endl;
+				cout << "Would you like to fold(F), call/check(C) or raise(R) the bet?" << endl;
 				cin>>action;
 				if(!cin.fail()){
 					if(action=="f" || action=="F"){
@@ -401,7 +472,7 @@ int main(){
 					else if(action=="c" || action=="C"){
 						game->takeBets(person, game->getHighestBet() - person->getBet());
 						person->setReady(true);
-						game->showTable();
+						//game->showTable();
 					}
 					else if(action=="r" || action=="R"){
 						int bet;
@@ -433,6 +504,12 @@ int main(){
 					cout << "Phil folds" << endl;
 				}
 				else{
+					if(p==0){
+						cout << "Phil checks" << endl;
+					}
+					else{
+						cout << "Phil sees the bet and raises $" << p << endl; 
+					}
 					game->takeBets(phil,p);
 					phil->setReady(true);
 					
@@ -450,7 +527,9 @@ int main(){
 			carol->setReady(true);
 		}
 		}
-		//Starter the turn
+		//*********************
+		//* Starter the turn **
+		//*********************
 		if(game->allReady()){
 			game->theTurn();
 			game->reset();
@@ -459,7 +538,7 @@ int main(){
 		while(!game->allReady()){
 			if(person->getDealer()==true){
 			if(!person->getFolded()){
-				cout << "Would you like to fold(F), check(C) or raise(R) the bet?" << endl;
+				cout << "Would you like to fold(F), call/check(C) or raise(R) the bet?" << endl;
 				cin>>action;
 				if(!cin.fail()){
 					if(action=="f" || action=="F"){
@@ -469,7 +548,7 @@ int main(){
 					else if(action=="c" || action=="C"){
 						game->takeBets(person, game->getHighestBet() - person->getBet());
 						person->setReady(true);
-						game->showTable();
+						//game->showTable();
 					}
 					else if(action=="r" || action=="R"){
 						int bet;
@@ -501,6 +580,12 @@ int main(){
 					cout << "Phil folds" << endl;
 				}
 				else{
+					if(p==0){
+						cout << "Phil checks" << endl;
+					}
+					else{
+						cout << "Phil sees the bet and raises $" << p << endl; 
+					}
 					game->takeBets(phil,p);
 					phil->setReady(true);
 					
@@ -515,6 +600,12 @@ int main(){
 					cout << "Carol folds" << endl;
 				}
 				else{
+					if(c==0){
+						cout << "Carol checks" << endl;
+					}
+					else{
+						cout << "Carol sees the bet and raises $" << c << endl; 
+					}
 					game->takeBets(carol,c);
 					carol->setReady(true);
 					
@@ -531,8 +622,13 @@ int main(){
 					cout << "Phil folds" << endl;
 				}
 				else{
+					if(p==0){
+						cout << "Phil checks" << endl;
+					}
+					else{
+						cout << "Phil sees the bet and raises $" << p << endl; 
+					}
 					game->takeBets(phil,p);
-					
 					phil->setReady(true);
 					
 				}
@@ -546,13 +642,19 @@ int main(){
 					cout << "Carol folds" << endl;
 				}
 				else{
+					if(c==0){
+						cout << "Carol checks" << endl;
+					}
+					else{
+						cout << "Carol sees the bet and raises $" << c << endl; 
+					}
 					game->takeBets(carol,c);
 					carol->setReady(true);
 					
 				}
 			}
 			if(!person->getFolded()){
-				cout << "Would you like to fold(F), check(C) or raise(R) the bet?" << endl;
+				cout << "Would you like to fold(F), call/check(C) or raise(R) the bet?" << endl;
 				cin>>action;
 				if(!cin.fail()){
 					if(action=="f" || action=="F"){
@@ -562,7 +664,7 @@ int main(){
 					else if(action=="c" || action=="C"){
 						game->takeBets(person, game->getHighestBet() - person->getBet());
 						person->setReady(true);
-						game->showTable();
+						//game->showTable();
 					}
 					else if(action=="r" || action=="R"){
 						int bet;
@@ -596,12 +698,18 @@ int main(){
 					cout << "Carol folds" << endl;
 				}
 				else{
+					if(c==0){
+						cout << "Carol checks" << endl;
+					}
+					else{
+						cout << "Carol sees the bet and raises $" << c << endl; 
+					}
 					game->takeBets(carol,c);
 					carol->setReady(true);
 				}
 			}
 			if(!person->getFolded()){
-				cout << "Would you like to fold(F), check(C) or raise(R) the bet?" << endl;
+				cout << "Would you like to fold(F), call/check(C) or raise(R) the bet?" << endl;
 				cin>>action;
 				if(!cin.fail()){
 					if(action=="f" || action=="F"){
@@ -611,7 +719,7 @@ int main(){
 					else if(action=="c" || action=="C"){
 						game->takeBets(person, game->getHighestBet() - person->getBet());
 						person->setReady(true);
-						game->showTable();
+						//game->showTable();
 					}
 					else if(action=="r" || action=="R"){
 						int bet;
@@ -643,6 +751,12 @@ int main(){
 					cout << "Phil folds" << endl;
 				}
 				else{
+					if(p==0){
+						cout << "Phil checks" << endl;
+					}
+					else{
+						cout << "Phil sees the bet and raises $" << p << endl; 
+					}
 					game->takeBets(phil,p);
 					phil->setReady(true);
 					
@@ -660,7 +774,9 @@ int main(){
 			carol->setReady(true);
 		}
 		}
-		//Starter fifth street
+		//*************************
+		//* Starter fifth street **
+		//*************************
 		if(game->allReady()){
 			game->fifthStreet();
 			game->reset();
@@ -669,7 +785,7 @@ int main(){
 		while(!game->allReady()){
 			if(person->getDealer()==true){
 			if(!person->getFolded()){
-				cout << "Would you like to fold(F), check(C) or raise(R) the bet?" << endl;
+				cout << "Would you like to fold(F), call/check(C) or raise(R) the bet?" << endl;
 				cin>>action;
 				if(!cin.fail()){
 					if(action=="f" || action=="F"){
@@ -679,7 +795,7 @@ int main(){
 					else if(action=="c" || action=="C"){
 						game->takeBets(person, game->getHighestBet() - person->getBet());
 						person->setReady(true);
-						game->showTable();
+						//game->showTable();
 					}
 					else if(action=="r" || action=="R"){
 						int bet;
@@ -711,6 +827,12 @@ int main(){
 					cout << "Phil folds" << endl;
 				}
 				else{
+					if(p==0){
+						cout << "Phil checks" << endl;
+					}
+					else{
+						cout << "Phil sees the bet and raises $" << p << endl; 
+					}
 					game->takeBets(phil,p);
 					phil->setReady(true);
 					
@@ -725,6 +847,12 @@ int main(){
 					cout << "Carol folds" << endl;
 				}
 				else{
+					if(c==0){
+						cout << "Carol checks" << endl;
+					}
+					else{
+						cout << "Carol sees the bet and raises $" << c << endl; 
+					}
 					game->takeBets(carol,c);
 					carol->setReady(true);
 					
@@ -741,8 +869,13 @@ int main(){
 					cout << "Phil folds" << endl;
 				}
 				else{
+					if(p==0){
+						cout << "Phil checks" << endl;
+					}
+					else{
+						cout << "Phil sees the bet and raises $" << p << endl; 
+					}
 					game->takeBets(phil,p);
-					
 					phil->setReady(true);
 					
 				}
@@ -756,13 +889,19 @@ int main(){
 					cout << "Carol folds" << endl;
 				}
 				else{
+					if(c==0){
+						cout << "Carol checks" << endl;
+					}
+					else{
+						cout << "Carol sees the bet and raises $" << c << endl; 
+					}
 					game->takeBets(carol,c);
 					carol->setReady(true);
 					
 				}
 			}
 			if(!person->getFolded()){
-				cout << "Would you like to fold(F), check(C) or raise(R) the bet?" << endl;
+				cout << "Would you like to fold(F), call/check(C) or raise(R) the bet?" << endl;
 				cin>>action;
 				if(!cin.fail()){
 					if(action=="f" || action=="F"){
@@ -772,7 +911,7 @@ int main(){
 					else if(action=="c" || action=="C"){
 						game->takeBets(person, game->getHighestBet() - person->getBet());
 						person->setReady(true);
-						game->showTable();
+						//game->showTable();
 					}
 					else if(action=="r" || action=="R"){
 						int bet;
@@ -806,12 +945,18 @@ int main(){
 					cout << "Carol folds" << endl;
 				}
 				else{
+					if(c==0){
+						cout << "Carol checks" << endl;
+					}
+					else{
+						cout << "Carol sees the bet and raises $" << c << endl; 
+					}
 					game->takeBets(carol,c);
 					carol->setReady(true);
 				}
 			}
 			if(!person->getFolded()){
-				cout << "Would you like to fold(F), check(C) or raise(R) the bet?" << endl;
+				cout << "Would you like to fold(F), call/check(C) or raise(R) the bet?" << endl;
 				cin>>action;
 				if(!cin.fail()){
 					if(action=="f" || action=="F"){
@@ -821,7 +966,7 @@ int main(){
 					else if(action=="c" || action=="C"){
 						game->takeBets(person, game->getHighestBet() - person->getBet());
 						person->setReady(true);
-						game->showTable();
+						//game->showTable();
 					}
 					else if(action=="r" || action=="R"){
 						int bet;
@@ -853,6 +998,12 @@ int main(){
 					cout << "Phil folds" << endl;
 				}
 				else{
+					if(p==0){
+						cout << "Phil checks" << endl;
+					}
+					else{
+						cout << "Phil sees the bet and raises $" << p << endl; 
+					}
 					game->takeBets(phil,p);
 					phil->setReady(true);
 					
@@ -871,7 +1022,7 @@ int main(){
 			}
 		}
 		if(person->getBet() < game->getHighestBet() && !person->getFolded()){
-			cout << "Would you like to fold(F), check(C) or raise(R) the bet?" << endl;
+			cout << "Would you like to fold(F), call/check(C) or raise(R) the bet?" << endl;
 				cin>>action;
 				if(!cin.fail()){
 					if(action=="f" || action=="F"){
@@ -881,7 +1032,7 @@ int main(){
 					else if(action=="c" || action=="C"){
 						game->takeBets(person, game->getHighestBet() - person->getBet());
 						person->setReady(true);
-						game->showTable();
+						//game->showTable();
 					}
 					else if(action=="r" || action=="R"){
 						int bet;
@@ -916,10 +1067,14 @@ int main(){
 		game->crownWinner();
 		game->newRound();
 		game->switchRoles();
+		userdealer = person->getDealer();
+		phildealer = phil->getDealer();
+		caroldealer = carol->getDealer();
 
-		cout << "\nWould you like to play another round, sir?" << endl;
+		cout << "\nYou now have $" << person->getBank() << " worth of casino chips" << endl;
+		cout << "\nWould you like to remain at the table?" << endl;
 		cin >> play;
-		if(play=="Y" || play=="Yes" || play=="yes" || play=="yup" || play=="yeah"){
+		if(play=="Y" || play=="Yes" || play=="yes" || play=="yup" || play=="yeah" || play=="ja"){
 			play = "y";
 		}
 		if(person->getBank()<=0){
@@ -931,6 +1086,7 @@ int main(){
 		delete deckofcards;
 		delete game;
 	}
+	cout << "Thanks for playing Know When to Fold 'Em! We hope to see you again" << endl;
 	delete person;
 	delete h;
 	return 0;

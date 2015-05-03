@@ -14,7 +14,7 @@ class AI : public player{
 	double HS;
 	int wins;
 public:
-	AI(std::string _name,int _money,hand* _hand);
+	AI(std::string _name,int _money,hand* _hand,bool d,bool bb, bool sb);
 
 	void calcPO(double pot, double highestbet);
 	void calcRR();

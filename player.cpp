@@ -3,10 +3,13 @@
 
 using namespace std;
 
-player::player(std::string n,int m,hand* _hand){
+player::player(std::string n,int m,hand* _hand,bool d, bool bb, bool sb){
 	name = n;
 	money = m;
 	playerhand = _hand;
+	dealer = d;
+	bigBlind = bb;
+	smallBlind = sb;
 }
 
 void player::setHand(hand* h){
@@ -74,6 +77,8 @@ int player::getBet(){
 	return bet;
 }
 
+//Metode som finner den beste hånden ved hjelp av arrays og returnerer
+//en int handRank som representerer den beste hånden til spilleren
 int player::calcHandRank(hand* table){
 	card temp = playerhand->getCard(0);
 	card temp2 = playerhand->getCard(1);

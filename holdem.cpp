@@ -4,16 +4,34 @@
 using namespace std;
 
 //Initialiserer
-holdem::holdem(player* _user, deck* _cards,int p, int c){
+holdem::holdem(player* _user, deck* _cards,int p, int c,bool ud,bool pd,bool cd){
 	user = _user;
 	cards = _cards;
 	philshand = new hand();
 	carolshand = new hand();
-	phil = new AI("Phil",p,philshand);
-	carol = new AI("Carol",c,carolshand);
-	user->setDealer(true);
-	phil->setSB(true);
-	carol->setBB(true);
+	bool philD = pd;
+	bool philBB = false;
+	bool philSB = false;
+	bool carolD = cd;
+	bool carolBB = false;
+	bool carolSB = false;
+	if(pd == true){
+		carolSB = true;
+		user->setBB(true);
+	}
+	else if(cd == true){
+		user->setSB(true);
+		philBB = true;
+	}
+	else{
+		philSB = true;
+		carolBB = true;
+	}
+	phil = new AI("Phil",p,philshand,philD,philBB,philSB);
+	carol = new AI("Carol",c,carolshand,carolD,carolBB,carolSB);
+	user->setDealer(ud);
+	phil->setDealer(pd);
+	carol->setDealer(cd);
 }
 
 //Starter spillet
@@ -83,8 +101,6 @@ void holdem::theFlop(){
 	table->addCard(cards->hit());
 
 	std::string userhand = user->showHand();
-	std::string p = phil->showHand();
-	std::string c = carol->showHand();
 	cout << "\n    Phil, Bank: "<< phil->getBank() <<"      Carol, Bank: " << carol->getBank() << endl;
 	cout << "   _______________________________________" << endl;
 	cout << "  /  "<< phil->getBet() <<"                  "<<carol->getBet()<<"               \\  " << endl;
@@ -93,7 +109,7 @@ void holdem::theFlop(){
 	cout << "|               "<<table->toString()<<"                 |" << endl;
 	cout << "|                                          |" << endl;
 	cout << "|                                          |" << endl;
-	cout << " \\          "<< user->getBet() <<"                              /" << endl;
+	cout << " \\          "<< user->getBet() <<"                             /" << endl;
 	cout << "  \\_______________________________________/" << endl;
 	cout << "             Your hand:" << userhand << endl;
 	cout << "             "<<user->getName()<<", Bank: " << user->getBank() << endl;
@@ -114,7 +130,7 @@ void holdem::theTurn(){
 	cout << "|               "<<table->toString()<<"             |" << endl;
 	cout << "|                                          |" << endl;
 	cout << "|                                          |" << endl;
-	cout << " \\          "<< user->getBet() <<"                              /" << endl;
+	cout << " \\          "<< user->getBet() <<"                             /" << endl;
 	cout << "  \\_______________________________________/" << endl;
 	cout << "             Your hand:" << userhand << endl;
 	cout << "             "<<user->getName()<<", Bank: " << user->getBank() << endl;
@@ -122,15 +138,12 @@ void holdem::theTurn(){
 	carol->calcHandRank(table);
 }
 
-//Legger ut the fifth street (de femte og siste kortet)
+//Legger ut the fifth street (det femte og siste kortet)
 void holdem::fifthStreet(){
 	table->addCard(cards->hit());
 
 	std::string userhand = user->showHand();
-	std::string philhand = phil->showHand();
-	std::string carolhand = carol->showHand();
 	cout << "\n    Phil, Bank: "<< phil->getBank() <<"      Carol, Bank: " << carol->getBank() << endl;
-	cout << "    Phils hand: "<<philhand << "             Carols hand: " << carolhand << endl;
 	cout << "   _______________________________________" << endl;
 	cout << "  /  "<< phil->getBet() <<"                  "<<carol->getBet()<<"               \\  " << endl;
 	cout << " /                                         \\" << endl;
@@ -138,7 +151,7 @@ void holdem::fifthStreet(){
 	cout << "|            "<<table->toString()<<"            |" << "  Pot: $"<< pot << endl;
 	cout << "|                                          |" << endl;
 	cout << "|                                          |" << endl;
-	cout << " \\          "<< user->getBet() <<"                              /" << endl;
+	cout << " \\          "<< user->getBet() <<"                             /" << endl;
 	cout << "  \\_______________________________________/" << endl;
 	cout << "             Your hand:" << userhand << endl;
 	cout << "             "<<user->getName()<<", Bank: " << user->getBank() << endl;
@@ -157,12 +170,12 @@ void holdem::showTable(){
 	cout << "|                                          |" << endl;
 	cout << "|                                          |" << endl;
 	cout << "|                                          |" << endl;
-	cout << " \\          "<< user->getBet() <<"                             /" << endl;
+	cout << " \\          "<< user->getBet() <<"                            /" << endl;
 	cout << "  \\_______________________________________/" << endl;
 	cout << "             Your hand:" << userhand << endl;
 	cout << "             "<<user->getName()<<", Bank: " << user->getBank() << endl;
 }
-
+//Viser bordet med alle kortene på bordet
 void holdem::showFinalTable(){
 	std::string userhand = user->showHand();
 	std::string philhand = phil->showHand();
@@ -176,7 +189,7 @@ void holdem::showFinalTable(){
 	cout << "|            "<<table->toString()<<"            |" << "  Pot: $"<< pot << endl;
 	cout << "|                                          |" << endl;
 	cout << "|                                          |" << endl;
-	cout << " \\          "<< user->getBet() <<"                              /" << endl;
+	cout << " \\          "<< user->getBet() <<"                             /" << endl;
 	cout << "  \\_______________________________________/" << endl;
 	cout << "             Your hand:" << userhand << endl;
 	cout << "             "<<user->getName()<<", Bank: " << user->getBank() << endl;
@@ -272,7 +285,7 @@ void holdem::newRound(){
 	carolshand->clearHand();
 
 }
-
+//Metode som regner ut oddsen for å vinne (ubrukt metode)
 void holdem::calcPotOdds(AI* ai){
 	double p = 0.00 + pot;
 	double h = highestBet + 0.00;
@@ -291,11 +304,12 @@ int holdem::getHighestBet(){return highestBet;}
 
 int holdem::getNumberOfPlayers(){return players;}
 
+//Kårer vinneren av runden ut i fra handrank som regnes ut i player.cpp
 void holdem::crownWinner(){
 	int u = user->calcHandRank(table);
 	int p = phil->calcHandRank(table);
 	int c = carol->calcHandRank(table);
-
+	pot = user->getBet() + phil->getBet() + carol->getBet();
 	std::string userhand = user->showHand();
 	std::string philhand = phil->showHand();
 	std::string carolhand = carol->showHand();
@@ -315,12 +329,7 @@ void holdem::crownWinner(){
 	phil->calcHandRank(table);
 	carol->calcHandRank(table);
 
-	cout << "Your hand score: " << u << endl;
-	cout << "Phil hand score: " << p << endl;
-	cout << "Carol hand score: " << c << endl;
-	cout << "Your highcard: " << user->getHigh() << endl;
-	cout << "Phils highcard: " << phil->getHigh() << endl;
-	cout << "Carols highcard: " << user->getHigh() << endl;
+	
 
 	if(user->getFolded()){
 		u = 0;

@@ -20,7 +20,7 @@ class player{
 	int handRank;
 	int highcard;
 public:
-	player(std::string _name,int _money,hand* _hand);
+	player(std::string _name,int _money,hand* _hand,bool d,bool bb, bool sb);
 	void setHand(hand* _hand);
 	int updateBank(int _money);
 	int getBank();

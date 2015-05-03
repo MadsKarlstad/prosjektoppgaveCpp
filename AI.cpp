@@ -3,7 +3,7 @@
 
 using namespace std;
 
-AI::AI(std::string n,int m,hand* _hand) : player(n,m,_hand){
+AI::AI(std::string n,int m,hand* _hand,bool d,bool bb, bool sb) : player(n,m,_hand,d,bb,sb){
 	
 }
 //Enkel metode for å gjøre action til en AI
@@ -59,24 +59,33 @@ int AI::getAction(deck* d, hand* table, int highestbet){
 				return betNeeded;
 			}
 		}
-		else if(getHigh()<=10){
+		else if(getHigh()<=10 && !getBB()){
 			setReady(true);
 			return fold;
 		}
 	}
+	if(betNeeded < -1){
+		betNeeded =0;
+	}
+	if(betNeeded+getBet() > getBank()){
+		betNeeded = getBank();
+	}
+	if(betNeeded>getBank()){
+		betNeeded = getBank();
+	}
 	setReady(true);
 	return betNeeded;
 }
-//Ubrukt metode
+//Regner ut Pot Odds (Ubrukt metode)
 void AI::calcPO(double pot, double highestbet){
 	double need = 0.00 + (highestbet - getBet());
 	PO = need/(need + pot);
 }
-//Ubrukt metode
+//Regner ut Rate of return (Ubrukt metode)
 void AI::calcRR(){
 	RR = HS/PO;
 }
-//Ubrukt metode
+//Regner ut Hand strength (Ubrukt metode)
 void AI::calcHS(deck* d, hand* table){
 	hand* h1 = new hand();
 	hand* h2 = new hand();

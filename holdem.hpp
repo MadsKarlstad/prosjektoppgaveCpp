@@ -28,7 +28,7 @@ class holdem{
 	double RR;
 	double HS;
 public:
-	holdem(player* _user, deck* _cards,int p,int c);
+	holdem(player* _user, deck* _cards,int p,int c,bool ud, bool pd, bool cd);
 	void start();
 	void deal();
 	void theFlop();
