@@ -28,13 +28,14 @@ class holdem{
 	double RR;
 	double HS;
 public:
-	holdem(player* _user, deck* _cards);
+	holdem(player* _user, deck* _cards,int p,int c);
 	void start();
 	void deal();
 	void theFlop();
 	void theTurn();
 	void fifthStreet();
 	void showTable();
+	void showFinalTable();
 	void crownWinner();
 	int getPot();
 	int getNumberOfPlayers();

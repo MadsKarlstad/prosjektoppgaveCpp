@@ -4,13 +4,13 @@
 using namespace std;
 
 //Initialiserer
-holdem::holdem(player* _user, deck* _cards){
+holdem::holdem(player* _user, deck* _cards,int p, int c){
 	user = _user;
 	cards = _cards;
 	philshand = new hand();
 	carolshand = new hand();
-	phil = new AI("Phil",1000,philshand);
-	carol = new AI("Carol",1000,carolshand);
+	phil = new AI("Phil",p,philshand);
+	carol = new AI("Carol",c,carolshand);
 	user->setDealer(true);
 	phil->setSB(true);
 	carol->setBB(true);
@@ -161,7 +161,28 @@ void holdem::showTable(){
 	cout << "  \\_______________________________________/" << endl;
 	cout << "             Your hand:" << userhand << endl;
 	cout << "             "<<user->getName()<<", Bank: " << user->getBank() << endl;
-	}
+}
+
+void holdem::showFinalTable(){
+	std::string userhand = user->showHand();
+	std::string philhand = phil->showHand();
+	std::string carolhand = carol->showHand();
+	cout << "\n    Phil, Bank: "<< phil->getBank() <<"      Carol, Bank: " << carol->getBank() << endl;
+	cout << "    Phils hand: "<<philhand << "             Carols hand: " << carolhand << endl;
+	cout << "   _______________________________________" << endl;
+	cout << "  /  "<< phil->getBet() <<"                  "<<carol->getBet()<<"               \\  " << endl;
+	cout << " /                                         \\" << endl;
+	cout << "|                                          |" << endl;
+	cout << "|            "<<table->toString()<<"            |" << "  Pot: $"<< pot << endl;
+	cout << "|                                          |" << endl;
+	cout << "|                                          |" << endl;
+	cout << " \\          "<< user->getBet() <<"                              /" << endl;
+	cout << "  \\_______________________________________/" << endl;
+	cout << "             Your hand:" << userhand << endl;
+	cout << "             "<<user->getName()<<", Bank: " << user->getBank() << endl;
+	phil->calcHandRank(table);
+	carol->calcHandRank(table);
+}
 
 //Tar et bet fra brukeren
 void holdem::takeBets(player* p, int b){
@@ -169,7 +190,6 @@ void holdem::takeBets(player* p, int b){
 	if(p->getBet() > highestBet){
 		highestBet=p->getBet();
 	}
-	cout << "Highest: " << highestBet << endl;
 	pot = pot + b;
 }
 
@@ -238,6 +258,9 @@ void holdem::newRound(){
 	phil->setReady(false);
 	carol->setReady(false);
 	user->setReady(false);
+	phil->setFolded(false);
+	carol->setFolded(false);
+	user->setFolded(false);	
 
 	user->resetBet();
 	phil->resetBet();
@@ -247,6 +270,7 @@ void holdem::newRound(){
 	playerhand->clearHand();
 	philshand->clearHand();
 	carolshand->clearHand();
+
 }
 
 void holdem::calcPotOdds(AI* ai){
@@ -297,6 +321,16 @@ void holdem::crownWinner(){
 	cout << "Your highcard: " << user->getHigh() << endl;
 	cout << "Phils highcard: " << phil->getHigh() << endl;
 	cout << "Carols highcard: " << user->getHigh() << endl;
+
+	if(user->getFolded()){
+		u = 0;
+	}
+	if(phil->getFolded()){
+		p=0;
+	}
+	if(carol->getFolded()){
+		c=0;
+	}
 
 	if(u>p && u>c){
 		cout << "You win!" << endl;

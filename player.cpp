@@ -110,12 +110,35 @@ int player::calcHandRank(hand* table){
 			mycards[temp.get_rank()-1] = 1;
 		}
 	}
+	int mysuits[4]={0};
+	for(int i=0;i<table->getSize();i++){
+		card temp = table->getCard(i);
+		if(mysuits[temp.get_suit() - 1]>=1){
+			mysuits[temp.get_suit() - 1]++;
+		}
+		else{
+			mysuits[temp.get_suit() - 1] = 1;
+		}
+	}
+	for(int j=0;j<playerhand->getSize();j++){
+		card temp = playerhand->getCard(j);
+		if(mysuits[temp.get_suit() - 1]>0){
+			mysuits[temp.get_suit() - 1]++;
+		}
+		else{
+			mysuits[temp.get_suit() - 1] = 1;
+		}
+	}
 
 
 	//Royal straight flush
 	if(mycards[0]>0 && mycards[9]>0 && mycards[10]>0 && mycards[11]>0 && mycards[12]>0){
-		handRank = 11;
-		return handRank;
+		for(int i=0;i<4;i++){
+			if(mysuits[i]==5){
+				handRank = 11;
+				return handRank;
+			}
+		}
 	}
 	//Four of a kind
 	for(int i=0;i<13;i++){
@@ -140,12 +163,19 @@ int player::calcHandRank(hand* table){
 		}
 	}
 	//Flush
-	for(int i=0;i<13;i++){
-		
-
+	for(int i=0;i<4;i++){
+		if(mysuits[i]==5){
+			handRank = 7;
+			return handRank;
+		}
 	}
 	//Straight
-
+	for(int i=0;i<8;i++){
+		if(mycards[i]>0 && mycards[i+1]>0 && mycards[i+2]>0 && mycards[i+3]>0 && mycards[i+4>0]){
+			handRank = 6;
+			return handRank;
+		}
+	}
 	//Three of a kind
 	for(int i=0;i<13;i++){
 		if(mycards[i] == 3){

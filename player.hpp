@@ -6,7 +6,6 @@
 #include "hand.hpp"
 #include "card.hpp"
 
-
 class player{
 	std::string name;
 	int money;
@@ -46,7 +45,6 @@ public:
 	int getHandRank();
 	int getHigh();
 	~player();
-
 };
 
 #endif
