@@ -6,3 +6,7 @@ Compile with $ make
 Run with $ ./KnowWhenToFoldEm
 
 Dokumentasjon: [Dokumentasjon](Dokumentasjon).
+
+Kildekode: [src](src).
+
+Sluttrapport: [Prosjektrapport.pdf](Prosjektrapport)
