@@ -9,4 +9,4 @@ Dokumentasjon: [Dokumentasjon](Dokumentasjon).
 
 Kildekode: [src](src).
 
-Sluttrapport: [Prosjektrapport](Prosjektrapport.pdf)
+Sluttrapport: [Prosjektrapport.pdf](Prosjektrapport.pdf)
