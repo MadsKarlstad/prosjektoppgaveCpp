@@ -1,3 +1,4 @@
+//Skrevet av Mads M Karlstad, s193949
 #ifndef CLASS_CARD_H
 #define CLASS_CARD_H
 

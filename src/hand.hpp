@@ -1,3 +1,4 @@
+//Skrevet av Mads M Karlstad, s193949
 #ifndef CLASS_HAND_H
 #define CLASS_HAND_H
 

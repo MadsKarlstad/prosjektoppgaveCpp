@@ -1,3 +1,5 @@
+//Skrevet av Mads M Karlstad, s193949
+
 #ifndef CLASS_AI_H
 #define CLASS_AI_H
 

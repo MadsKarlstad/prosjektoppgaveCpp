@@ -1,3 +1,4 @@
+//Skrevet av Mads M Karlstad, s193949
 #include "AI.hpp"
 #include <iostream>
 
