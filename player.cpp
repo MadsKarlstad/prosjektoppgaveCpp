@@ -136,11 +136,16 @@ int player::calcHandRank(hand* table){
 	}
 
 
-	//Royal straight flush
+	//Royal Straight
 	if(mycards[0]>0 && mycards[9]>0 && mycards[10]>0 && mycards[11]>0 && mycards[12]>0){
 		for(int i=0;i<4;i++){
+			//Royal Straight flush
 			if(mysuits[i]==5){
 				handRank = 11;
+				return handRank;
+			}
+			else{
+				handRank = 10;
 				return handRank;
 			}
 		}

@@ -16,7 +16,12 @@ int AI::getAction(deck* d, hand* table, int highestbet){
 	int betNeeded = highestbet - getBet();
 
 	if(getHandRank()==11){
-		raisebet = rand() % 100;
+		raisebet = rand() % 1000;
+		setReady(true);
+		return raisebet + betNeeded;
+	}
+	else if(getHandRank()==10){
+		raisebet = rand() % 700;
 		setReady(true);
 		return raisebet + betNeeded;
 	}
@@ -59,7 +64,7 @@ int AI::getAction(deck* d, hand* table, int highestbet){
 				return betNeeded;
 			}
 		}
-		else if(getHigh()<=10 && !getBB()){
+		else if(getHigh()<=10){
 			setReady(true);
 			return fold;
 		}
